@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Descripcion del problema}
+\subsection{Función Objetivo}
+
+Al asignar razonablemente la producción de las unidades, los costos operativos pueden reducirse significativamente. 
+El modelo de costos se simplifica a continuación:
+
+\begin{equation}
+    \min (F_T) =\min  \sum_{i=1}^{N} F_i(P_{Gi})
+\end{equation}
+
+Donde \( F_T \) indica el costo total del combustible, \( N \) representa el numero total de unidades de generación, 
+\( P_{Gi} \) es la salida de potencia activa del \( i \)-th generador, y \( F_i(P_{Gi}) \) significa el costo del consumo 
+de combustible correspondiente del \( i \)-th generador, y se puede expresar como un polinomio cuadrático dependiente de 
+la potencian:
+
+\begin{equation}
+    F_i(P_{Gi}) = a_i(P_{Gi})^2 + b_i(P_{Gi}) + c_i
+\end{equation}
+
+donde \( a_i \), \( b_i \), and \( c_i \) representan los coeficientes de costo del combustible. Cuando la válvula de 
+admisión de la turbomáquina se abre repentinamente, el resultado, conocido como 'efecto de punto de válvula', 
+puede representarse generalmente como una función sinusoidal. Esta función sinusoidal se añadirá a la tradicional 
+función de costo de combustible cuadrática, es decir:
+
+\begin{equation}
+    F_i(P_{Gi}) = a_i(P_{Gi})^2 + b_i(P_{Gi}) + c_i + |d_i \sin(e_i (P_{Gi}^{\min} - P_{Gi}))|
+\end{equation}
+
+Donde \( P_{Gi}^{\min} \) representa el límite inferior de la potencia de salida del \( i \)-th generador, 
+y \( |d_i| \) y \( e_i \) son los coeficientes de costo. 
+
+\section{Restricciones}
+\subsection{Restricciones de Balance de Potencia}
+
+% La potencia de salida de cada generador debe ser igual a la potencia de carga más la potencia de pérdida en 
+% la línea de transmisión, es decir:
+
+% \begin{equation}
+    % P_{Gi} = P_{D} + P_{L}
+% \end{equation}
+
+Las restricciones de equilibrio de potencia son las restricciones más críticas en la operación de la unidad generadora. 
+Si no se cumple esta restricción, se producirá la parálisis del sistema eléctrico y se amenazará seriamente la fiabilidad
+ de la operación del sistema. Esta restricción se puede resumir en que la producción total de todas las unidades generadoras 
+ debe ser igual a la suma de la carga y la pérdida de transmisión
+
+\begin{equation}
+    \sum_{i=1}^{N} P_{Gi} = P_{D} + P_{L}
+\end{equation}
+
+\begin{equation}
+    P_{L} = \sum_{i=1}^{N}\sum_{j=1}^{N} P_{Gi}B_{ij}P_{Gj} + \sum_{i=1}^{N}B_{i0}P_{Gi} + B_{00}
+\end{equation}
+
+\subsection{Restricciones de Generación}
+
+La potencia de salida de cada generador debe estar dentro de los límites de generación, es decir:
+
+\begin{equation}
+    P_{Gi}^{\min} \leq P_{Gi} \leq P_{Gi}^{\max}
+\end{equation}
+
+donde \( P_{Gi}^{\min} \) y \( P_{Gi}^{\max} \) son los límites inferior y superior de la potencia de salida del 
+\( i \)-th generador, respectivamente.
+
+\subsection{Límite de velocidad de rampa}
+%La capacidad de rampa de cada generador debe estar dentro de los límites de rampa, es decir:
+
+%\begin{equation}
+    %\Delta P_{Gi}^{\min} \leq \Delta P_{Gi} \leq \Delta P_{Gi}^{\max}
+%\end{equation}
+
+Dentro de un período de tiempo, la variación de potencia está limitada por el funcionamiento del generador. 
+Esta restricción se describe a continuación:
+
+\begin{equation}
+    - DR_{i} \leq  P_{Gi} - P_{Gi(t-1)} \leq UR_{i}
+\end{equation}
+
+Donde \( DR_{i} \) y \( UR_{i} \) son las tasas de disminución y aumento de potencia del \( i \)-th generador,
+respectivamente.
+
+\subsection{Límites de las zonas de operación prohibida}
+
+La potencia de salida de cada generador debe estar fuera de las zonas de operación prohibida, es decir:
+
+\begin{equation}
+    P_{Gi}^{\min} \leq P_{Gi} \leq P_{Gi}^{\max}
+\end{equation}
+
+Los cojinetes del generador producirán vibraciones intensas cuando el generador funcione en algunas
+zonas. Por lo tanto, la potencia de salida debe ajustarse para evitar zonas de funcionamiento prohibidas durante
+la operación real. Los límites de las zonas de funcionamiento prohibidas se enumeran a continuación:
+
+\begin{equation}
+    \left\{
+    \begin{array}{l}
+        P_{Gi}^{\min} \leq P_{Gi} \leq P_{Gi}^{1} \\[8pt]
+        P_{Gi}^{k-1} \leq P_{Gi} \leq P_{Gi}^{k}, \quad k = 2,3,\dots,n_Z \\[8pt]
+        P_{Gi}^{n_Z} \leq P_{Gi} \leq P_{Gi}^{\max}
+    \end{array}
+    \right.
+\end{equation}
+
+\end{document}
