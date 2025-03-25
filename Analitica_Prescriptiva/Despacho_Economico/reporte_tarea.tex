@@ -131,7 +131,7 @@ Este reporte presenta la resolución de un caso práctico de Despacho Económico
 \setcounter{page}{1}   % Ensure the page counter starts at 1
 
 \section{Introducción}	
-El problema de despacho económico de carga se refiere al proceso de asignar la generación de energía de las centrales eléctricas de manera que se cubra la demanda total de energía a un costo mínimo, respetando restricciones técnicas y operativas del sistema. Este problema involucra decisiones sobre qué plantas deben generar electricidad y en qué cantidad, tomando en cuenta factores como los costos de combustible, la eficiencia de cada planta, y las limitaciones en la capacidad de transmisión y generación \citep{en17030550}.
+El problema de despacho económico de carga consiste en determinar la cantidad de potencia que deben suministrar las unidades de generación a la red eléctrica, de manera que se cubra la demanda total de energía al menor costo posible, cumpliendo al mismo tiempo con las restricciones técnicas y operativas del sistema \citep{en17030550}.
 
 \begin{figure}[h!]
     \centering
@@ -140,7 +140,7 @@ El problema de despacho económico de carga se refiere al proceso de asignar la 
     \label{fig:economic_dispatch}
 \end{figure}
 
-La optimización toma un rol fundamental en este proceso, ya que el problema de despacho económico se formula de forma concisa como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones tanto económicas como técnicas del sistema eléctrico \citep{osti_6202356}.
+La optimización juega un papel fundamental en este proceso, ya que el despacho económico se plantea como un problema matemático en el que se busca minimizar el costo total de generación, sujeto a diversas restricciones económicas y técnicas del sistema eléctrico \citep{osti_6202356}.
 
 En este trabajo se replica el caso de estudio del sistema 1 presentado en \citep{electronics9010108}, donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta fuente. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
 \newpage
