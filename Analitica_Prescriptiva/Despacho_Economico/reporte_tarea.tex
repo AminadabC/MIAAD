@@ -133,6 +133,24 @@ Este reporte presenta la resolución de un caso práctico de Despacho Económico
 \section{Introducción}	
 El problema de despacho económico de carga consiste en determinar la cantidad de potencia que deben suministrar las unidades de generación a la red eléctrica, de manera que se cubra la demanda total de energía al menor costo posible, cumpliendo al mismo tiempo con las restricciones técnicas y operativas del sistema \citep{en17030550}.
 
+La optimización juega un papel fundamental en este proceso, ya que el despacho económico se plantea como un problema matemático en el que se busca minimizar el costo total de generación, sujeto a diversas restricciones económicas y técnicas del sistema eléctrico \citep{osti_6202356}.
+
+En este trabajo se replica el caso de estudio del sistema 1 presentado en \citep{electronics9010108}, donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta referencia. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
+
+\newpage
+\section{Descripción general del caso de estudio}
+
+El caso de estudio se centra en un sistema eléctrico compuesto por seis unidades generadoras como se muestra en la Figura 1, cada una con características técnicas y económicas específicas. El objetivo principal es determinar la asignación óptima de potencia generada por cada unidad, minimizando el costo total de generación mientras se cumplen las restricciones operativas y técnicas del sistema.
+
+El sistema considera los siguientes aspectos clave:
+\begin{itemize}
+    \item \textbf{Restricciones de generación:} Cada unidad generadora tiene límites mínimos y máximos de potencia que deben respetarse.
+    \item \textbf{Restricciones de rampa:} Las unidades generadoras tienen límites en la velocidad de cambio de potencia entre periodos consecutivos.
+    \item \textbf{Pérdidas de transmisión:} Se incluyen pérdidas de transmisión en las líneas eléctricas, modeladas mediante una matriz de coeficientes \( B \).
+    \item \textbf{Demanda total:} La generación total debe satisfacer la demanda del sistema, considerando las pérdidas de transmisión.
+    \item \textbf{Costos de generación:} Los costos de generación de cada unidad se modelan como funciones cuadráticas, con términos adicionales para representar efectos no lineales como el punto de válvula.
+\end{itemize}
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{economic-dispatch.png}
@@ -140,9 +158,6 @@ El problema de despacho económico de carga consiste en determinar la cantidad d
     \label{fig:economic_dispatch}
 \end{figure}
 
-La optimización juega un papel fundamental en este proceso, ya que el despacho económico se plantea como un problema matemático en el que se busca minimizar el costo total de generación, sujeto a diversas restricciones económicas y técnicas del sistema eléctrico \citep{osti_6202356}.
-
-En este trabajo se replica el caso de estudio del sistema 1 presentado en \citep{electronics9010108}, donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta fuente. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
 \newpage
 \section{Modelo matemático}
 \subsection{Función Objetivo}
