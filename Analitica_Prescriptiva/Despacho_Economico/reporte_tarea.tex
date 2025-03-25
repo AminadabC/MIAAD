@@ -38,6 +38,8 @@
 
 
 %bibliography packages
+\usepackage{natbib}  % Para manejar citas con BibTeX
+% \usepackage{hyperref}   Para hipervínculos en la bibliografía
 
 \usepackage[utf8]{inputenc} % Codificación UTF-8
 \usepackage[T1]{fontenc}    % Codificación de fuentes
@@ -138,9 +140,9 @@ El problema de despacho económico de carga se refiere al proceso de asignar la 
     \label{fig:economic_dispatch}
 \end{figure}
 
-La optimización toma un rol fundamental en este proceso, ya que el problema de despacho económico se formula de forma concisa como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones tanto económicas como técnicas (ref Allen J. Wood) del sistema eléctrico.
+La optimización toma un rol fundamental en este proceso, ya que el problema de despacho económico se formula de forma concisa como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones tanto económicas como técnicas del sistema eléctrico \citep{osti_6202356}.
 
-En este trabajo se replica el caso de estudio del sistema 1 presentado en (ref2), donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta fuente. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
+En este trabajo se replica el caso de estudio del sistema 1 presentado en \citep{electronics9010108}, donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta fuente. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
 \newpage
 \section{Modelo matemático}
 \subsection{Función Objetivo}
@@ -331,10 +333,15 @@ print(f"Costo total de generación: {model.CostoTotal.expr():.2f} $")
 
 \newpage
 \section{Capturas de pantalla}
-El problema de despacho económico de carga se puede formular como un problema de programación lineal, donde se busca minimizar el costo total de generación sujeto a diversas restricciones. A continuación se presenta una formulación simplificada del problema, donde se considera un sistema eléctrico con $n$ plantas generadoras y $m$ demandas de energía.
+A continuación, se presentan las capturas de pantalla que muestran los resultados obtenidos al ejecutar el código en el entorno de desarrollo Visual Studio Code
 
 \newpage
 \section{Interpretación de resultados}	
 El problema de despacho económico de carga se puede formular como un problema de programación lineal, donde se busca minimizar el costo total de generación sujeto a diversas restricciones. A continuación se presenta una formulación simplificada del problema, donde se considera un sistema eléctrico con $n$ plantas generadoras y $m$ demandas de energía.
+
+\newpage
+ %\section{Referencias}  Crea la sección numerada y la agrega a la tabla de contenido
+\bibliographystyle{apa}  % Estilo de citación
+\bibliography{referencias}  % Archivo .bib
 
 \end{document}
