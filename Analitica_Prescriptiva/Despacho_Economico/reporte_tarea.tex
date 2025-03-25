@@ -36,6 +36,7 @@
 %Package to get current date
 \usepackage{datetime}
 
+
 %bibliography packages
 
 % Document Variables 
@@ -95,8 +96,16 @@ Este reporte presenta la resolución de un caso práctico de Despacho Económico
 \section{Introducción}	
 El problema de despacho económico de carga se refiere al proceso de asignar la generación de energía de las centrales eléctricas de manera que se cubra la demanda total de energía a un costo mínimo, respetando restricciones técnicas y operativas del sistema. Este problema involucra decisiones sobre qué plantas deben generar electricidad y en qué cantidad, tomando en cuenta factores como los costos de combustible, la eficiencia de cada planta, y las limitaciones en la capacidad de transmisión y generación.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{economic-dispatch.jpg}
+    \caption{Representación del problema de despacho económico de carga.}
+    \label{fig:economic_dispatch}
+\end{figure}
+
 La optimización juega un papel crucial en este proceso, ya que el problema se formula generalmente como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones (como las capacidades de generación, las emisiones, y las interconexiones de la red). Las técnicas de optimización, como la programación lineal, no lineal o estocástica, se utilizan para encontrar la solución más eficiente, considerando tanto los costos operativos como las condiciones del sistema eléctrico.
 
+En este trabajo se implementa un caso práctico presentado en la literatura, donde se formula un modelo de despacho económico de carga y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
 \newpage
 \section{Modelo matemático}
 \subsection{Función Objetivo}
@@ -195,7 +204,7 @@ la operación real. Los límites de las zonas de funcionamiento prohibidas se en
 
 \newpage
 \section{Código en Python}
-El problema de despacho económico de carga se puede formular como un problema de programación lineal, donde se busca minimizar el costo total de generación sujeto a diversas restricciones. A continuación se presenta una formulación simplificada del problema, donde se considera un sistema eléctrico con $n$ plantas generadoras y $m$ demandas de energía.
+El modelo matemático presentado anteriormente se implementa en Pyomo, una biblioteca de optimización en Python. Pyomo permite definir modelos de optimización de manera sencilla y eficiente, y proporciona una interfaz para resolverlos con diversos solvers. A continuación se presenta la implementación del modelo de despacho económico de carga en Pyomo.
 
 \newpage
 \section{Capturas de pantalla}
