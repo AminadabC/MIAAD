@@ -39,6 +39,41 @@
 
 %bibliography packages
 
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+\usepackage[T1]{fontenc}    % Codificación de fuentes
+\usepackage[spanish]{babel} % Idioma español
+\usepackage{xcolor}         % Colores
+\usepackage{listings}       % Para mostrar código fuente
+
+% ===== Configuración de estilos para Python =====
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mypython}{
+    language=Python,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    captionpos=b,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+             {“}{{``}}1 {”}{{''}}1 {‘}{{`}}1 {’}{{'}}1
+}
+
+
 % Document Variables 
 \newcommand{\myTitle}{Reporte de práctica \\ El problema de despacho económico de carga}
 \newcommand{\myName}{Alumno: Aminadab Córdova Acosta}
@@ -98,14 +133,14 @@ El problema de despacho económico de carga se refiere al proceso de asignar la 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{economic-dispatch.jpg}
+    \includegraphics[width=0.8\textwidth]{economic-dispatch.png}
     \caption{Representación del problema de despacho económico de carga.}
     \label{fig:economic_dispatch}
 \end{figure}
 
-La optimización juega un papel crucial en este proceso, ya que el problema se formula generalmente como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones (como las capacidades de generación, las emisiones, y las interconexiones de la red). Las técnicas de optimización, como la programación lineal, no lineal o estocástica, se utilizan para encontrar la solución más eficiente, considerando tanto los costos operativos como las condiciones del sistema eléctrico.
+La optimización toma un rol fundamental en este proceso, ya que el problema de despacho económico se formula de forma concisa como un problema matemático de optimización, donde se busca minimizar el costo total de generación sujeto a diversas restricciones tanto económicas como técnicas (ref Allen J. Wood) del sistema eléctrico.
 
-En este trabajo se implementa un caso práctico presentado en la literatura, donde se formula un modelo de despacho económico de carga y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
+En este trabajo se replica el caso de estudio del sistema 1 presentado en (ref2), donde se formula un modelo de despacho económico de carga, ilustrado en la Figura 1 y se resuelve utilizando Pyomo, una biblioteca de optimización en Python. Los datos del sistema se toman de esta fuente. Se presenta una descripción detallada del problema, la formulación matemática del modelo, la implementación en Pyomo, y la interpretación de los resultados obtenidos.
 \newpage
 \section{Modelo matemático}
 \subsection{Función Objetivo}
@@ -205,6 +240,94 @@ la operación real. Los límites de las zonas de funcionamiento prohibidas se en
 \newpage
 \section{Código en Python}
 El modelo matemático presentado anteriormente se implementa en Pyomo, una biblioteca de optimización en Python. Pyomo permite definir modelos de optimización de manera sencilla y eficiente, y proporciona una interfaz para resolverlos con diversos solvers. A continuación se presenta la implementación del modelo de despacho económico de carga en Pyomo.
+
+\begin{lstlisting}[style=mypython, caption={Modelo de Despacho Económico con Pyomo}]
+from pyomo.environ import *
+    
+# Crear el modelo
+model = ConcreteModel()
+    
+# Conjunto de generadores
+model.Generadores = Set(initialize=['G1', 'G2', 'G3', 'G4', 'G5', 'G6'])
+    
+# Parámetros de los generadores
+datos_generadores = {
+    'G1': {'Pmax': 500, 'Pmin': 100, 'ai': 0.007, 'bi': 7, 'ci': 240, 'UR': 80, 'DR': 120, 'Pi': 440},
+    'G2': {'Pmax': 200, 'Pmin': 50, 'ai': 0.0095, 'bi': 10, 'ci': 200, 'UR': 50, 'DR': 90, 'Pi': 170},
+    'G3': {'Pmax': 300, 'Pmin': 80, 'ai': 0.009, 'bi': 8.5, 'ci': 220, 'UR': 65, 'DR': 100, 'Pi': 200},
+    'G4': {'Pmax': 150, 'Pmin': 50, 'ai': 0.009, 'bi': 11, 'ci': 200, 'UR': 50, 'DR': 90, 'Pi': 150},
+    'G5': {'Pmax': 200, 'Pmin': 50, 'ai': 0.008, 'bi': 10.5, 'ci': 220, 'UR': 50, 'DR': 90, 'Pi': 190},
+    'G6': {'Pmax': 120, 'Pmin': 50, 'ai': 0.0075, 'bi': 12, 'ci': 190, 'UR': 50, 'DR': 90, 'Pi': 110}
+}
+    
+# Definir parámetros en el modelo
+model.Pmax = Param(model.Generadores, initialize={g: datos_generadores[g]['Pmax'] for g in model.Generadores})
+model.Pmin = Param(model.Generadores, initialize={g: datos_generadores[g]['Pmin'] for g in model.Generadores})
+model.ai = Param(model.Generadores, initialize={g: datos_generadores[g]['ai'] for g in model.Generadores})
+model.bi = Param(model.Generadores, initialize={g: datos_generadores[g]['bi'] for g in model.Generadores})
+model.ci = Param(model.Generadores, initialize={g: datos_generadores[g]['ci'] for g in model.Generadores})
+model.UR = Param(model.Generadores, initialize={g: datos_generadores[g]['UR'] for g in model.Generadores})
+model.DR = Param(model.Generadores, initialize={g: datos_generadores[g]['DR'] for g in model.Generadores})
+model.Pi = Param(model.Generadores, initialize={g: datos_generadores[g]['Pi'] for g in model.Generadores})
+    
+# Parámetro de demanda total
+demanda_total = 1263
+model.Demanda = Param(initialize=demanda_total)
+    
+# Matriz B y coeficientes (Para el cálculo aproximado de las pérdidas de transmisión)
+B1 = [[0.01 * val for val in row] for row in [
+    [0.0017, 0.0012, 0.0007, -0.0001, -0.0005, -0.0002],
+    [0.0012, 0.0014, 0.0009,  0.0001, -0.0006, -0.0001],
+    [0.0007, 0.0009, 0.0031,  0.0000, -0.0010, -0.0006],
+    [-0.0001, 0.0001, 0.0000,  0.0024, -0.0006, -0.0008],
+    [-0.0005, -0.0006, -0.0010, -0.0006, 0.0129, -0.0002],
+    [-0.0002, -0.0001, -0.0006, -0.0008, -0.0002, 0.0150]
+]]
+    
+B2 = [0.001 * val for val in [-0.3908, -0.1297, 0.7047, 0.0591, 0.2161, -0.6635]]
+B3 = 0.56
+    
+# Definir parámetros de pérdidas
+model.B1 = Param(model.Generadores, model.Generadores, initialize={(g1, g2): B1[i][j] for i, g1 in enumerate(model.Generadores) for j, g2 in enumerate(model.Generadores)})
+model.B2 = Param(model.Generadores, initialize={g: B2[i] for i, g in enumerate(model.Generadores)})
+model.B3 = Param(initialize=B3)
+    
+# Variable de generación de cada generador
+model.Pg = Var(model.Generadores, within=NonNegativeReals)
+    
+# Pérdidas
+model.PL = Expression(expr=sum(model.B1[g1, g2] * model.Pg[g1] * model.Pg[g2] for g1 in model.Generadores for g2 in model.Generadores) +
+                            sum(model.B2[g] * model.Pg[g] for g in model.Generadores) + model.B3)
+    
+# Restricciones de límites de generación
+model.LimiteInferior = Constraint(model.Generadores, rule=lambda m, g: m.Pmin[g] <= m.Pg[g])
+model.LimiteSuperior = Constraint(model.Generadores, rule=lambda m, g: m.Pg[g] <= m.Pmax[g])
+    
+# Restricciones de rampas
+model.RampaSubida = Constraint(model.Generadores, rule=lambda m, g: m.Pg[g] - m.Pi[g] <= m.UR[g])
+model.RampaBajada = Constraint(model.Generadores, rule=lambda m, g: m.Pi[g] - m.Pg[g] <= m.DR[g])
+    
+# Restricción de demanda considerando pérdidas
+model.DemandaTotal = Constraint(rule=lambda m: sum(m.Pg[g] for g in m.Generadores) == m.Demanda + m.PL)
+    
+# Función objetivo: minimizar el costo de generación
+model.CostoTotal = Objective(
+    expr=sum(model.ai[g] * model.Pg[g] ** 2 + model.bi[g] * model.Pg[g] + model.ci[g] for g in model.Generadores),
+    sense=minimize
+)
+    
+# Resolver el modelo con IPOPT
+solver = SolverFactory('ipopt')
+result = solver.solve(model)
+    
+# Mostrar resultados
+print("Resultados de la generación de cada unidad:")
+for g in model.Generadores:
+    print(f"Generación de {g}: {model.Pg[g].value:.2f} MW")
+    
+print(f"\nPérdidas totales: {model.PL():.2f} MW")
+print(f"Costo total de generación: {model.CostoTotal.expr():.2f} $")
+\end{lstlisting}
 
 \newpage
 \section{Capturas de pantalla}
