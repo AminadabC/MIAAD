@@ -162,8 +162,7 @@ El sistema considera los siguientes aspectos clave que se encuentran en la Tabla
 \section{Modelo matemático}
 \subsection{Función Objetivo}
 
-Al asignar razonablemente la producción de las unidades, los costos operativos pueden reducirse significativamente. 
-El modelo de costos se simplifica a continuación:
+La función objetivo consiste en minimizar el costo total de generación del sistema, que se calcula como la suma de los costos de generación de cada unidad. Cada costo de generación se modela como un polinomio cuadrático dependiente de la potencia generada, con términos adicionales para representar efectos no lineales como el punto de válvula. La función objetivo se expresa de la siguiente manera:
 
 \begin{equation}
     \min (F_T) =\min  \sum_{i=1}^{N} F_i(P_{Gi})
