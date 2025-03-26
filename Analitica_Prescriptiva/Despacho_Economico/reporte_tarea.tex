@@ -140,14 +140,14 @@ En este trabajo se replica el caso de estudio del sistema 1 presentado en \citep
 \newpage
 \section{Descripción general del caso de estudio}
 
-El caso de estudio se centra en un sistema eléctrico compuesto por seis unidades generadoras como se muestra en la Figura 1, cada una con características técnicas y económicas específicas. El objetivo principal es determinar la asignación óptima de potencia generada por cada unidad, minimizando el costo total de generación mientras se cumplen las restricciones operativas y técnicas del sistema.
+El caso de estudio se centra en un sistema eléctrico compuesto por seis unidades generadoras ilustrado en la Fig. 1, cada una con características técnicas y económicas específicas. El objetivo principal es determinar la asignación óptima de potencia generada por cada unidad, minimizando el costo total de generación mientras se cumplen las restricciones operativas y técnicas del sistema.
 
-El sistema considera los siguientes aspectos clave:
+El sistema considera los siguientes aspectos clave que se encuentran en la Tabla 4 y el apéndice A de \citep{electronics9010108}:
 \begin{itemize}
     \item \textbf{Restricciones de generación:} Cada unidad generadora tiene límites mínimos y máximos de potencia que deben respetarse.
     \item \textbf{Restricciones de rampa:} Las unidades generadoras tienen límites en la velocidad de cambio de potencia entre periodos consecutivos.
     \item \textbf{Pérdidas de transmisión:} Se incluyen pérdidas de transmisión en las líneas eléctricas, modeladas mediante una matriz de coeficientes \( B \).
-    \item \textbf{Demanda total:} La generación total debe satisfacer la demanda del sistema, considerando las pérdidas de transmisión.
+    \item \textbf{Demanda total:} La generación total debe satisfacer la demanda del sistema (1263 MW), considerando las pérdidas de transmisión.
     \item \textbf{Costos de generación:} Los costos de generación de cada unidad se modelan como funciones cuadráticas, con términos adicionales para representar efectos no lineales como el punto de válvula.
 \end{itemize}
 
