@@ -1,0 +1,91 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usetheme{Madrid}
+\setbeamertemplate{footline}[frame number]  % Solo deja el número de página centrado abajo
+
+
+% Información de la presentación
+\title{Resolución de Sudoku mediante Optimización Lineal Entera}
+\subtitle{Modelado matemático del problema de Sudoku}
+\author{Aminadab Córdova Acosta} 
+\institute{Universidad Autónoma de Ciudad Juárez \\
+Maestría en Inteligencia Artificial y Analítica de Datos \\
+Programación para Analítica Prescriptiva y de Apoyo a la Decisión \\
+Instructor: Dr. Josué Domínguez Guerrero}
+\date{\today}
+
+\begin{document}
+
+% Diapositiva de título
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Diapositiva de contenido
+\begin{frame}{Contenido}
+    \begin{itemize}
+        \item Descripción del problema
+        \item Modelo matemático
+        \item Conclusiones
+    \end{itemize}
+\end{frame}
+
+% Descripción del problema
+\begin{frame}{Descripción del problema}
+    \begin{itemize}
+        \item Resolver un tablero de Sudoku 9x9 de forma automática mediante un modelo de optimización.
+        \item Reglas del Sudoku:
+        \begin{itemize}
+            \item Cada fila debe contener los números del 1 al 9 sin repetir.
+            \item Cada columna debe contener los números del 1 al 9 sin repetir.
+            \item Cada subcuadro 3x3 debe contener los números del 1 al 9 sin repetir.
+        \end{itemize}
+        \item Se parte de un conjunto de pistas iniciales dadas.
+        \item El objetivo es encontrar una solución válida que cumpla con todas las restricciones.
+    \end{itemize}
+\end{frame}
+
+% Modelo matemático - Variables y objetivo
+\begin{frame}{Modelo matemático: Variables y objetivo}
+    \textbf{Variables:} 
+    \[ x_{ijk} = \begin{cases} 1 & \text{si el número } k \text{ está en la celda } (i,j) \\ 0 & \text{en otro caso} \end{cases} \]
+
+    \textbf{Función objetivo:} Minimizar el número de decisiones nuevas:
+    \[ \min \sum_{(i,j,k)\ \text{no pistas}} x_{ijk} \]
+\end{frame}
+
+% Modelo matemático - Restricciones (parte 1)
+\begin{frame}{Modelo matemático: Restricciones (1/2)}
+    \begin{itemize}
+        \item Una cifra por celda:
+        \[ \sum_{k=1}^{9} x_{ijk} = 1 \quad \forall i,j \]
+        \item Un número por fila:
+        \[ \sum_{j=1}^{9} x_{ijk} = 1 \quad \forall i,k \]
+        \item Un número por columna:
+        \[ \sum_{i=1}^{9} x_{ijk} = 1 \quad \forall j,k \]
+    \end{itemize}
+\end{frame}
+
+% Modelo matemático - Restricciones (parte 2)
+\begin{frame}{Modelo matemático: Restricciones (2/2)}
+    \begin{itemize}
+        \item Un número por bloque 3x3:
+        \[ \sum_{i=i_0}^{i_0+2} \sum_{j=j_0}^{j_0+2} x_{ijk} = 1 \quad \forall k,\ \text{bloques } (i_0,j_0) \]
+        \item Pistas fijas:
+        \[ x_{ijk} = 1 \quad \text{si la pista en } (i,j) \text{ es } k \]
+    \end{itemize}
+\end{frame}
+
+% Conclusiones
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item El Sudoku fue modelado como un problema de optimización entera binaria.
+        \item Las restricciones del juego se expresaron como ecuaciones lineales.
+        \item El modelo permite encontrar soluciones válidas desde un punto de vista matemático.
+        \item Esta formulación es aplicable a problemas combinatorios similares de validación o asignación.
+    \end{itemize}
+\end{frame}
+
+\end{document}
