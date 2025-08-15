@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+
+% ========================
+% Paquetes
+% ========================
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in, includefoot, includehead]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float} % Asegúrate de tener esto en el preámbulo
+
+% ========================
+% Configuración código Python
+% ========================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mypython}{
+    language=Python,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    captionpos=b,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+             {“}{{``}}1 {”}{{''}}1 {‘}{{`}}1 {’}{{'}}1
+}
+
+% ========================
+% Encabezado y pie de página
+% ========================
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{Reporte DQGA}
+\fancyfoot[L]{Maestría en Inteligencia Artificial y Analítica de Datos}
+\fancyfoot[R]{\thepage}
+\renewcommand{\footrulewidth}{1pt}
+
+% ========================
+% Variables del documento
+% ========================
+\newcommand{\myTitle}{Exploración y aplicación de una metaheurística reciente}
+\newcommand{\myName}{Alumno: Aminadab Córdova Acosta}
+\newcommand{\myClass}{Asignatura: Optimización Inteligente}
+\newcommand{\myTecher}{Instructor: Dr. Raul Gibran Porras Alanis}
+\newcommand{\myDate}{\today}
+
+% ========================
+% Portada
+% ========================
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.75]{UACJ.png} \\
+        \huge{\textbf{Universidad Autónoma\\de Ciudad Juárez}} \\[0.25in]
+        \textbf{\Large{Instituto de Ingeniería y Tecnología}}\\
+        \Large{Departamento de Ingeniería Eléctrica y Computación}\\
+        \Large{Maestría en Inteligencia Artificial y Analítica de Datos}\\[1in]
+        \line(1,0){400}\\[2mm]
+        \textsc{\Large{\myTitle}} \\
+        \line(1,0){400} \\[1in]
+    \end{center}
+    \begin{center}
+        \myName \\
+        \myClass\\
+        \myTecher\\[0.5in]
+        \myDate
+    \end{center}
+\end{titlepage}
+
+% ========================
+% Contenido
+% ========================
+\section{Artículo de estudio}
+\textbf{Título:} \textit{A Modified Quantum-Inspired Genetic Algorithm Using Lengthening Chromosome Size and an Adaptive Look-Up Table to Avoid Local Optima} \\
+\textbf{Autores:} Shahin Hakemi ,Mahboobeh Houshmand, Seyyed Abed Hosseini and Xujuan Zhou
+
+\section{Resumen del artículo}
+En este artículo, \citet{9599348} proponen un modelo basado en redes neuronales convolucionales en grafos (GCNs) para identificar parámetros en sistemas de transmisión eléctrica, como la susceptancia y la conductancia de las líneas de transmisión. La identificación precisa de estos parámetros es de suma importancia, ya que influyen directamente en el comportamiento de variables críticas como los voltajes, las corrientes y los flujos de potencia en la red. Conocer con exactitud estos valores permite mejorar el modelado del sistema, realizar análisis de estado más confiables, optimizar el despacho de energía, y detectar anomalías operativas. El modelo propuesto, denominado MT-GCN (Multi-Task Graph Convolutional Network), integra la topología del sistema representada como un grafo, junto con mediciones históricas, para generar estimaciones robustas incluso en presencia de ruido o pérdida parcial de datos.
+
+
+\section{Descripción del algoritmo o modelo}
+
+Las Redes Neuronales Convolucionales de Grafos (GCN, por sus siglas en inglés) son una clase de redes neuronales profundas diseñadas para trabajar con datos estructurados en forma de grafos. A diferencia de las redes neuronales tradicionales, que operan sobre datos en espacios euclidianos como imágenes o texto, las GCN están diseñadas para manejar datos no euclidianos, como redes sociales, moléculas químicas, y sistemas de recomendación. Este tipo de modelo se basa en la agregación de información de los nodos vecinos, lo que permite que cada nodo en el grafo actualice su representación en función de su contexto local \cite{zhang2019graph}.
+
+La operación de convolución en una GCN se puede formalizar mediante la siguiente ecuación:
+
+\[
+\mathbf{H}^{(l+1)} = \sigma \left( \tilde{\mathbf{D}}^{-1/2} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-1/2} \mathbf{H}^{(l)} \mathbf{\Theta}^{(l)} \right)
+\]
+
+donde \(\mathbf{H}^{(l)}\) es la matriz de características de los nodos en la capa \(l\), \(\tilde{\mathbf{A}}\) es la matriz de adyacencia del grafo, \(\tilde{\mathbf{D}}\) es la matriz diagonal de grados de los nodos, y \(\mathbf{\Theta}^{(l)}\) son los parámetros de la capa \(l\). La función \(\sigma\) es típicamente una función de activación como ReLU.
+
+Las GCN han sido aplicadas exitosamente en una variedad de áreas, incluyendo la predicción de enlaces, la clasificación de nodos y grafos, y el análisis de redes complejas. Un análisis exhaustivo de su evolución y aplicaciones se encuentra en la revisión de Zhang et al. \cite{zhang2019graph}, mientras que otras investigaciones han explorado su uso en el sector energético, donde su capacidad para modelar interacciones complejas ha mostrado un gran potencial para mejorar las predicciones de la demanda y la oferta energética \cite{9339909}.
+
+El modelo MT-GCN de \citet{9599348} combina dos componentes clave:
+
+\begin{itemize}
+    \item \textbf{GCN (Graph Convolutional Network):} extrae características estructurales de la red eléctrica utilizando convoluciones espectrales basadas en el Laplaciano del grafo. Utiliza una aproximación de primer orden del polinomio de Chebyshev:
+    \[
+    X * g_\theta = \theta(\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2})X
+    \]
+
+    \item \textbf{FCN (Fully Connected Network):} actúa como decodificador, estimando los parámetros eléctricos $g_k$ y $b_k$, basados en las potencias activas/reactivas y voltajes:
+    \[
+    g_k = \frac{(P_i^k + P_j^k)(P_i^{k2} + (Q_i^k + U_i^{k2} y_k)^2)}{U_i^{k2}[(P_i^k + P_j^k)^2 + (Q_i^k + Q_j^k + (U_i^{k2} + U_j^{k2})y_k)^2]}
+    \]
+    \[
+    b_k = \frac{-\left[Q_i^k + Q_j^k + (U_i^{k2} + U_j^{k2})y_k\right](P_i^{k2} + (Q_i^k + U_i^{k2} y_k)^2)}{U_i^{k2}[(P_i^k + P_j^k)^2 + (Q_i^k + Q_j^k + (U_i^{k2} + U_j^{k2})y_k)^2]}
+    \]
+\end{itemize}
+
+
+%\begin{figure}[H]
+ %   \centering
+  %  \includegraphics[width=0.65\textwidth]{fig1_topologia_ramas.png}
+   % \caption{Fig. 1. Diagrama topológico de ramas del sistema de transmisión eléctrica (estructura del grafo).}
+    %\label{fig:topologia}
+%\end{figure}
+
+\vspace{1em}  % espacio adicional entre figura y texto
+
+La red eléctrica se representa como un grafo cuya estructura se ilustra en la Figura~\ref{fig:topologia}, lo cual permite aplicar operaciones de convolución sobre su topología mediante el modelo GCN.
+
+\clearpage  % fuerza salto de página para evitar solapamientos si es necesario
+
+\section{Aplicación en Ciencia de Datos o IA}
+El modelo MT-GCN se aplica en sistemas eléctricos para estimar parámetros de líneas de transmisión. Utiliza tanto medidas históricas como la topología del sistema representada en grafos, lo que permite:
+\begin{itemize}
+    \item Estimaciones robustas ante datos faltantes o ruidosos.
+    \item Generalización a otras ramas del sistema eléctrico.
+    \item Aplicaciones en monitoreo en tiempo real y mantenimiento predictivo.
+\end{itemize}
+
+\section{Ventajas y limitaciones}
+\subsection*{Ventajas}
+\begin{itemize}
+    \item Considera explícitamente la estructura de la red.
+    \item Preciso y robusto frente a ruido.
+    \item Supera a modelos tradicionales como SVR o regresión lineal.
+\end{itemize}
+
+\subsection*{Limitaciones}
+\begin{itemize}
+    \item Requiere reconstrucción del grafo si cambia la topología.
+    \item Las GCNs profundas pueden sufrir de sobre-suavizado.
+\end{itemize}
+
+\section{Conclusión}
+Este artículo demuestra el potencial de las GCNs para aplicaciones reales en ingeniería eléctrica, mejorando la identificación de parámetros en sistemas de transmisión. Su integración de topología de red y datos históricos lo convierte en un avance relevante en el uso de IA en sistemas físicos complejos. Refleja una tendencia hacia modelos inteligentes que respetan la estructura de los datos en ciencia aplicada.
+
+\clearpage  % fuerza salto de página para evitar solapamientos si es necesario
+
+\section{Referencias}
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\end{document}
